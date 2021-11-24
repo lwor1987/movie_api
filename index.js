@@ -1,6 +1,10 @@
-const express = require('express');
-const morgan = require('morgan');
-const app = express();
+const mongoose = require('mongoose');
+const Models = require('./models.js');
+
+const Movies = Models.Movie;
+const Users = Models.Users;
+
+mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 let movies = [
   {
@@ -51,6 +55,11 @@ let movies = [
     title: 'Thor: Ragnarok',
     genre: ['Action', 'Adventure', 'Comedy', 'Fantasy', 'Superhero', 'Buddy', 'Science Fiction'],
     director: 'Taika Waititi'
+  },
+  {
+    title: 'Gurdians Of The Galaxy Vol. 2',
+    genre: ['Action', 'Adventure', 'Comedy', 'Fantasy', 'Superhero', 'Science Fiction'],
+    director: 'James Gunn'
   }
 ];
 // middleware
@@ -121,3 +130,4 @@ app.use((err, req, res, next) => {
 app.listen(8080, () => {
   console.log('Your app is listening on port 8080.');
 });
+
