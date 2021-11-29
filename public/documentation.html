@@ -1,114 +1,79 @@
-
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Documentation</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
-  </head>
-  <body>
-      <h1>MOVIE API</h1>
-      <p>This is a "movies" web application. The user will be able to access information about movies, directors, and genres on this application. The user will be able to sign up and make updates to the personal information and also their movie list.</p>
-  </body>
+<html lang="en">
 
-  <table>
-    <thread>
-      <tr>
-        <th> Request </th>
-        <th>Url</th>
-        <th>Responses</th>
-      </tr>
-    </thread>
-    <tbody>
-      <tr>
-        <td>GET</td>
-        <td>/</td>
-        <td>Homepage for myFlix App.</td>
-      </tr>
-      <tr>
-        <td>GET</td>
-        <td>/documentation</td>
-        <td>Get Documentation fo myFlix App.</td>
-      </tr>
-      <tr>
-      <tr>
-        <td>GET</td>
-        <td>/movies</td>
-        <td>Return a list of All movies to the user.</td>
-      </tr>
-      <tr>
-        <td>GET</td>
-        <td>/movies/:title</td>
-        <td>
-          Return date (description, genre,director,image URL,whetheer it's featured or not) about a single movie by title to the user.
-        </td>
-      </tr>
-      <tr>
-        <td>GET</td>
-        <td>/movies/:title/genre</td>
-        <td>
-          Return data about genre (description) by name/title(e.g., "Thriller")
-        </td>
-      </tr>
-      <tr>
-        <td>GET</td>
-        <td>/movies/director/:name</td>
-        <td>
-          Return data about a director (bio, birth year, death year) by name.
-        </td>
-      </tr>
-      <tr>
-        <td>GET</td>
-        <td>/users</td>
-        <td>
-          Get a list of all the users.
-        </td>
-      </tr>
-      <tr>
-        <td>GET</td>
-          <td>/users/:Username</td>
-          <td>
-            Get a user by username.
-          </td>
-        <td>POST</td>
-        <td>/users</td>
-        <td>
-          Allow new users to register.
-        </td>
-      </tr>
-      <tr>
-      <tr>
-        <td>POST</td>
-        <td>/users/:Username/movies/:MovieID</td>
-        <td>
-          Allow users to add a movie to their list of favorites (showing only the text that a movie has been added-more on this later).
-        </td>
-      </tr>
-      <tr>
-        <td>PUT</td>
-        <td>/users/:Username</td>
-        <td>
-          Allow users to update their user info(username).
-        </td>
-      </tr>
-      <tr>
-        <td>DELETE</td>
-        <td>/users/://username/movies/:MovieID</td>
-        <td>
-          Allow users to remove a movie from their list of favorites(showing only a text that a movie has been removed-more on this later).
-        </td>
-      </tr>
-      <tr>
-        <td>DELETE</td>
-        <td>/users/:Username</td>
-        <td>
-          Allow existing users to deregister(showing only a text that a user email has been removed-more on this later).
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <title>Movie_Api</title>
+</head>
+
+<body>
+<table>
+    <thead>
+        <tr>
+            <th>HTTP Method</th>
+            <th>Request</th>
+            <th>URL</th>
+            <th>Request body data format</th>
+        </tr>
+    </thead>
+        <tbody>
+            <tr>
+                <td>GET</td>
+                <td>Get all movie lists</td>
+                <td>"/movies"</td>
+                <td>Return a list of All movies to the user</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>Get movie by title</td>
+                <td>"/movies/:title"</td>
+                <td>Return a list of one movie by title</td>    
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>Get movie by genre</td>
+                <td>"/movies/genre/:title"</td>
+                <td>Return data about genre (description) by name/title(e.g., "Thriller")</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>Get movie director name</td>
+                <td>"/movies/director/:name"</td>
+                <td>Return data about a director (bio, birth year, death year) by name </td>
+            </tr>
+            <tr>
+                <td>POST</td>
+                <td> Allow new users to register</td>
+                <td>"/users"</td>
+                <td> A new user will be added using JSON format </td>
+                
+    
+            </tr>
+            <tr>
+                <td>PUT</td>
+                <td>Allow users to update their user info(username)</td>
+                <td>"/users/:username"</td>
+            </tr>
+            <tr>
+                <td>POST</td>
+                <td>Allow users to add a movie to their list of favorites (showing only the text that a movie has been added-more on this later)</td>
+                <td>"/users/:username/movies/:movieId"</td>
+            </tr>
+            <tr>
+                <td>DELETE</td>
+                <td>Allow users to remove a movie from their list of favorites(showing only a text that a movie has been removed-more on this later)</td>
+                <td>"/users/:username/movies/:movieId"</td>
+            </tr>
+            <tr>
+                <td>DELETE</td>
+                <td>Allow existing users to deregister(showing only a text that a user email has been removed-more on this later)</td>
+                <td>"/users"</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
 </html>
-
- 
-
