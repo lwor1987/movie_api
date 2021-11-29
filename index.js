@@ -9,7 +9,7 @@ const models = require("./models.js");
 
 
 const Movies = models.Movie;
- const  Users = models.User;
+ const Users = models.User;
  
 
  mongoose.connect("mongodb://localhost:27017/myFlixDB", {
@@ -99,7 +99,7 @@ app.get("/users", (req, res) => {
 
 //Get user by username
 app.get('/users/:username', (req, res) =>{
-  Users.findOne({Username: req.params.Username})
+  Users.findOne({username: req.params.username})
     .then((user)=> {
       res.status(201).json(user);
     })
@@ -113,16 +113,16 @@ app.get('/users/:username', (req, res) =>{
 
 // Allow new users to register.
 app.post("/users", (req, res) => { 
-  Users.findOne({ Username: req.body.Username })
+  Users.findOne({ username: req.body.username })
   .then((user) => {
   if (user) {
-    return res.status(400).send (req.body.Username + 'already exists');
+    return res.status(400).send (req.body.username + 'already exists');
   } else {
     Users.create({
-      Username: req.body.Username,
-      Password: req.body.Password,
-      Email: req.body.Email,
-      Birthday: req.body.Birthday
+      username: req.body.username,
+      password: req.body.password,
+      email: req.body.email,
+      birthday: req.body.birthday
     })
     .then((user) =>{
       res.status(201).json(user) })
@@ -143,7 +143,7 @@ res.status(500).send("Error: " + error);
 // Allow users to add a movie to their list of favorites (showing only a text that a movie has been added—more on this later)
 
 app.post("/users/:Username/movies/:MovieID", (req, res) => {
-  Users.findOneAndUpdate({ Username: req.params.Username }, 
+  Users.findOneAndUpdate({ username: req.params.username }, 
     {
       $push: { favoriteMovies: req.params.MovieID }
    },
@@ -186,7 +186,7 @@ app.put("/users/:id", (req, res) => {
 
 // Allow users to remove a movie from their list of favorites (showing only a text that a movie has been removed—more on this later)
 app.delete("/users/:username/movies/:Moviesid", (req, res) => {
-  Users.findOneAndUpdate({Username: req.params.Username}, 
+  Users.findOneAndUpdate({username: req.params.username}, 
     {$pull:
       {favoriteMovies: req.params.Moviesid}
     },
@@ -203,7 +203,7 @@ app.delete("/users/:username/movies/:Moviesid", (req, res) => {
 
 // Allow existing users to deregister
 app.delete("/users/:username", (req, res) =>{
-  Users.findOneAndRemove({Username: req.params.Username})
+  Users.findOneAndRemove({username: req.params.username})
     .then((user)=> {
       if(user) {
         res.status(400).send(req.params.username + ' was not found');
