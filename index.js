@@ -9,6 +9,7 @@ const app = express();
 const mongoose = require("mongoose"); 
 const Models = require("./models.js");
 
+const { check, validationResult } = require("express-validator");
 
 const Movies = Models.Movie;
  const Users = Models.User;
@@ -27,6 +28,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended:true }));
 app.use (morgan("common"));
 app.use(express.static("public"));
+
+
+const cors = require("cors");
+app.use(cors());
+
 
 
 let auth = require("./auth")(app);
@@ -122,15 +128,28 @@ app.get("/users/:username", passport.authenticate("jwt", {session:false}), (req,
 
 
 // Allow new users to register.
-app.post("/users", (req, res) => { 
+app.post("/users", 
+[
+  check("Username", "Username is required").isLength({min:5}),
+  check("Username", "Username contains nonalphanumeric characters - not allowed").isAlphanumeric(),
+  check("Password", "Password is required").not().isEmpty(),
+  check ("Email", "Email does not appear to be valid").isEmail()
+  ], (req,res) => { // check the validation object for errors
+      let errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(422).json ({ errors: errors.array() } 
+        );      
+  } 
+   let hashedPassword = Users.hashPassword(req.body.Password);
+
   Users.findOne({ username: req.body.username })
   .then((user) => {
   if (user) {
-    return res.status(400).send (req.body.username + 'already exists');
+    return res.status(400).send (req.body.username + "already exists");
   } else {
     Users.create({
       username: req.body.username,
-      password: req.body.password,
+      password: hashedPassword,
       email: req.body.email,
       birthday: req.body.birthday
     })
@@ -235,6 +254,11 @@ app.use((err, req, res, next ) => {
 });
 
 // listen for requests
-app.listen(8080, () => {
-  console.log( "Listening on Port 8080.");
-});
+//app.listen(8080, () => {
+ // console.log( "Listening on Port 8080.");
+//});
+ const port = process.env
+       >Port || 8080; 
+       app.listen(port, "0.0.0.0", () =>{
+         console.log("Listening on Port" + port);
+       });
