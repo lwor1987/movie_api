@@ -7,7 +7,7 @@ const uuid = require("uuid");
 const app = express(); 
 
 const mongoose = require("mongoose"); 
-const Models = require("./models.js");
+const Models = require("./model.js");
 
 const { check, validationResult } = require("express-validator");
 
@@ -15,11 +15,13 @@ const Movies = Models.Movie;
  const Users = Models.User;
  
 
- mongoose.connect("mongodb://localhost:27017/myFlixDB", {
-  useNewUrlParser: true, 
-   useUnifiedTopology: true });
+ //mongoose.connect("mongodb://localhost:27017/myFlixDB", {
+ // useNewUrlParser: true, 
+   //useUnifiedTopology: true });
 
-  //mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+   mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+
+   
 
 
 
