@@ -25,7 +25,7 @@ const Movies = Models.Movie;
 
 
 
-// middleware
+// middleware 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended:true }));
 app.use (morgan("common"));
@@ -259,8 +259,7 @@ app.use((err, req, res, next ) => {
 //app.listen(8080, () => {
  // console.log( "Listening on Port 8080.");
 //});
- const port = process.env
-       >Port || 8080; 
+ const port = process.env.Port || 8080; 
        app.listen(port, "0.0.0.0", () =>{
          console.log("Listening on Port" + port);
        });
