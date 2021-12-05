@@ -137,9 +137,9 @@ app.post("/users",
   check("Password", "Password is required").not().isEmpty(),
   check ("Email", "Email does not appear to be valid").isEmail()
   ], (req,res) => { // check the validation object for errors
-      let errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(422).json ({ errors: errors.array() } 
+      let validationErrors = validationResult(req);
+      if (!validationErrors.isEmpty()) {
+        return res.status(422).json ({ errors: validationErrors.array() } 
         );      
   } 
    let hashedPassword = Users.hashPassword(req.body.Password);
