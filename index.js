@@ -116,8 +116,8 @@ app.get("/users",  passport.authenticate("jwt", {session:false}), (req, res) => 
 });
 
 //Get user by username
-app.get("/users/:username", passport.authenticate("jwt", {session:false}), (req, res) =>{
-  Users.findOne({username: req.params.username})
+app.get("/users/:Username", passport.authenticate("jwt", {session:false}), (req, res) =>{
+  Users.findOne({Username: req.params.Username})
     .then((user)=> {
       res.status(201).json(user);
     })
@@ -132,28 +132,31 @@ app.get("/users/:username", passport.authenticate("jwt", {session:false}), (req,
 // Allow new users to register.
 app.post("/users", 
 [
-  check("Username", "Username is required").isLength({min:5}),
-  check("Username", "Username contains nonalphanumeric characters - not allowed").isAlphanumeric(),
+  check("Username", "Username is required").isLength({ min: 5 }),
+  check("Username", "Username contains non alphanumeric characters - not allowed").isAlphanumeric(),
   check("Password", "Password is required").not().isEmpty(),
   check ("Email", "Email does not appear to be valid").isEmail()
-  ], (req,res) => { // check the validation object for errors
-      let validationErrors = validationResult(req);
-      if (!validationErrors.isEmpty()) {
-        return res.status(422).json ({ errors: validationErrors.array() } 
-        );      
+  ], (req,res) => {
+    
+    // check the validation object for errors
+    
+      let errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(422).json ({ errors: errors.array() });      
   } 
    let hashedPassword = Users.hashPassword(req.body.Password);
 
-  Users.findOne({ username: req.body.username })
+  Users.findOne({ Username: req.body.Username })
   .then((user) => {
   if (user) {
-    return res.status(400).send (req.body.username + "already exists");
+    return res.status(400).send (req.body.Username + "already exists");
   } else {
-    Users.create({
-      username: req.body.username,
-      password: hashedPassword,
-      email: req.body.email,
-      birthday: req.body.birthday
+    Users
+    .create({
+      Username: req.body.Username,
+      Password: hashedPassword,
+      Email: req.body.Email,
+      Birthday: req.body.Birthday
     })
     .then((user) =>{
       res.status(201).json(user) })
@@ -174,7 +177,7 @@ res.status(500).send("Error: " + error);
 // Allow users to add a movie to their list of favorites (showing only a text that a movie has been added—more on this later)
 
 app.post("/users/:Username/movies/:MovieID", passport.authenticate("jwt", {session:false}), (req, res) => {
-  Users.findOneAndUpdate({ username: req.params.username }, 
+  Users.findOneAndUpdate({ Username: req.params.Username }, 
     {
       $push: { favoriteMovies: req.params.MovieID }
    },
@@ -190,14 +193,14 @@ app.post("/users/:Username/movies/:MovieID", passport.authenticate("jwt", {sessi
 });
 
 //update user info
-app.put("/users/:id", passport.authenticate("jwt", {session:false}), (req, res) => {
-  Users.findOneAndUpdate({id: req.params.id},
+app.put("/users/:Username", passport.authenticate("jwt", {session:false}), (req, res) => {
+  Users.findOneAndUpdate({Username: req.params.Username},
     {$set:
       {
-        username: req.body.username,
-        password: req.body.password,
-        email: req.body.email,
-        birthday: req.body.birthday
+        Username: req.body.Username,
+        Password: req.body.Password,
+        Email: req.body.Email,
+        Birthday: req.body.Birthday
       }
     },
     {new: true}, //Ensures document is returned
@@ -216,8 +219,8 @@ app.put("/users/:id", passport.authenticate("jwt", {session:false}), (req, res) 
 // DELETE Request.
 
 // Allow users to remove a movie from their list of favorites (showing only a text that a movie has been removed—more on this later)
-app.delete("/users/:username/movies/:Moviesid",passport.authenticate("jwt", {session:false}),  (req, res) => {
-  Users.findOneAndUpdate({username: req.params.username}, 
+app.delete("/users/:Username/movies/:Moviesid",passport.authenticate("jwt", {session:false}),  (req, res) => {
+  Users.findOneAndUpdate({Username: req.params.Username}, 
     {$pull:
       {favoriteMovies: req.params.Moviesid}
     },
@@ -233,13 +236,13 @@ app.delete("/users/:username/movies/:Moviesid",passport.authenticate("jwt", {ses
   });
 
 // Allow existing users to deregister
-app.delete("/users/:username", passport.authenticate("jwt", {session:false}), (req, res) =>{
-  Users.findOneAndRemove({username: req.params.username})
+app.delete("/users/:Username", passport.authenticate("jwt", {session:false}), (req, res) =>{
+  Users.findOneAndRemove({Username: req.params.Username})
     .then((user)=> {
       if(user) {
-        res.status(400).send(req.params.username + ' was not found');
+        res.status(400).send(req.params.Username + ' was not found');
       }else{
-        res.status(200).send(req.params.username + ' was deleted.');
+        res.status(200).send(req.params.Username + ' was deleted.');
       }
     })
       .catch((err)=> {
