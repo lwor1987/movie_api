@@ -19,9 +19,10 @@ const Movies = Models.Movie;
   //useNewUrlParser: true, 
    //useUnifiedTopology: true });
 
-  mongoose.connect(process.env.CONNECTION_URI, { 
+  mongoose.connect("mongodb+srv://robertj:robj1978@myflixdb.kysla.mongodb.net/myFlixDB?retryWrites=true&w=majority", { 
     useNewUrlParser: true,
-     useUnifiedTopology: true });
+     useUnifiedTopology: true
+     });
 
    
 
@@ -264,7 +265,7 @@ app.use((err, req, res, next ) => {
 //app.listen(8080, () => {
  // console.log( "Listening on Port 8080.");
 //});
- const Port = process.env.PORT || 8080; 
-       app.listen(Port, "0.0.0.0", () => {
-         console.log("Listening on Port" + Port);
+ const port = process.env.PORT || 8080; 
+       app.listen(port, "0.0.0.0/0", () => {
+         console.log("Listening on Port" + port);
        });
