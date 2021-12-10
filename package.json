@@ -17,10 +17,9 @@
     "passport-local": "^1.0.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+   "start": "node index.js"
   },
-  
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lwor1987/movie_api.git"
