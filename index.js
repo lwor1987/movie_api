@@ -19,10 +19,9 @@ const Movies = Models.Movie;
   //useNewUrlParser: true, 
    //useUnifiedTopology: true });
 
-  mongoose.connect("mongodb+srv://robertj:robj1978@myflixdb.kysla.mongodb.net/myFlixDB?retryWrites=true&w=majority", { 
-    useNewUrlParser: true,
-     useUnifiedTopology: true
-     });
+   mongoose.connect( process.env.CONNECTION_URI, {
+      useNewUrlParser: true, 
+      useUnifiedTopology: true });
 
    
 
