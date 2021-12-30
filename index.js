@@ -249,7 +249,7 @@ app.delete("/users/:Username", passport.authenticate("jwt", {session:false}), (r
         console.error(err);
         res.status(500).send("Error: " + err);
     });
-});
+});npm 
 
 
 

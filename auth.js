@@ -25,12 +25,12 @@ module.exports = (router) => {
                 user: user
              });
           }
-          req.login(user, {session: false}, (error) => {
+          req.login(user, {session: false }, (error) => {
              if (error){
                 res.send(error);
              }
              let token = generateJWTToken(user.toJSON()); //generating token for authenticating futures requests
-             return res.json({user, token}); //returns the token
+             return res.json({ user, token }); //returns the token
           });
        })(req, res);
     });
