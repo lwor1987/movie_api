@@ -85,7 +85,7 @@ app.get("/movies/genre/:name", passport.authenticate("jwt", {session:false}), (r
   .then((genre)=> {
     res.status(201).json(genre)
   })
-  .catch((err)=> {
+  .catch((err) => {
     console.error(err);
     res.status(500).send("Error: " + err);
   });
@@ -94,10 +94,10 @@ app.get("/movies/genre/:name", passport.authenticate("jwt", {session:false}), (r
 // Return data about a director (bio, birth year, death year) by name.
 app.get("/movies/director/:directorname", passport.authenticate("jwt", {session:false}), (req, res) =>{
   Movies.findOne({ "director.name": req.params.director})
-    .then((director)=> {
+    .then((director) => {
       res.status(201).json(director);
     })
-    .catch((err)=> {
+    .catch((err) => {
       console.error(err);
       res.status(500).send("Error: " + err);
     });
@@ -106,10 +106,10 @@ app.get("/movies/director/:directorname", passport.authenticate("jwt", {session:
 // Get all users
 app.get("/users",  passport.authenticate("jwt", {session:false}), (req, res) => {
   Users.find()
-    .then((user)=> {
+    .then((user) => {
       res.status(201).json(user);
     })
-    .catch((err)=> {
+    .catch((err) => {
       console.error(err);
       res.status(500).send("Error: " + err);
     });
@@ -205,7 +205,7 @@ app.put("/users/:Username", passport.authenticate("jwt", {session:false}), (req,
       }
     },
     {new: true}, //Ensures document is returned
-    (err, userUpdated)=> {
+    (err, userUpdated) => {
       if (err) {
         console.error(err);
         res.status(500).send("Error: " + err);
@@ -239,7 +239,7 @@ app.delete("/users/:Username/movies/:Moviesid",passport.authenticate("jwt", {ses
 // Allow existing users to deregister
 app.delete("/users/:Username", passport.authenticate("jwt", {session:false}), (req, res) =>{
   Users.findOneAndRemove({ "Username": req.params.Username})
-    .then((user)=> {
+    .then((user)  => {
       if(user) {
         res.status(400).send(req.params.Username + ' was not found');
       }else{
