@@ -95,7 +95,7 @@ app.get("/genre/:name", passport.authenticate("jwt", {session:false}), (req, res
 app.get("/directors/:directorName", passport.authenticate("jwt", {session:false}), (req, res) =>{
   Movies.findOne({ "Director.Name": req.params.directorName})
     .then((movies) => {
-      res.status(201).json(movies.Director);
+      res.status(201).json(director);
     })
     .catch((err) => {
       console.error(err);
