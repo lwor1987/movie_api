@@ -80,10 +80,10 @@ app.get("/movies/:title", passport.authenticate("jwt", {session:false}),(req, re
   });
 
 // Return data about a genre (description) by name/title (e.g., “Thriller”).
-app.get("/movies/genre/:name", passport.authenticate("jwt", {session:false}), (req, res)=> {
-  Movies.findOne({ "genre.name": req.params.name})
-  .then((genre)=> {
-    res.status(201).json(genre)
+app.get("/genre/:name", passport.authenticate("jwt", {session:false}), (req, res)=> {
+  Movies.findOne({ "Genre.Name": req.params.name})
+  .then((movie)=> {
+    res.status(201).json(movie.Genre)
   })
   .catch((err) => {
     console.error(err);
@@ -92,10 +92,10 @@ app.get("/movies/genre/:name", passport.authenticate("jwt", {session:false}), (r
 });
 
 // Return data about a director (bio, birth year, death year) by name.
-app.get("/movies/director/:directorname", passport.authenticate("jwt", {session:false}), (req, res) =>{
-  Movies.findOne({ "director.name": req.params.director})
-    .then((director) => {
-      res.status(201).json(director);
+app.get("/director/:directorname", passport.authenticate("jwt", {session:false}), (req, res) =>{
+  Movies.findOne({ "Director.Name": req.params.director})
+    .then((movie) => {
+      res.status(201).json(movie.director);
     })
     .catch((err) => {
       console.error(err);
