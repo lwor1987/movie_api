@@ -1,21 +1,8 @@
-const express = require("express");
-const morgan = require("morgan");
-const bodyParser = require("body-parser");
-
-
-
-const app = express(); 
-
 const mongoose = require("mongoose");
-const cors = require('cors');
-
 const Models = require("./models.js");
-
 const { check, validationResult } = require("express-validator");
-
 const Movies = Models.Movie;
  const Users = Models.User;
- 
 
  //mongoose.connect("mongodb://localhost:27017/myFlixDB", {
   //useNewUrlParser: true, 
@@ -23,33 +10,33 @@ const Movies = Models.Movie;
 
    mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-   
+const express = require("express");
+const morgan = require("morgan");
+const app = express(); 
+
+
+const bodyParser = require("body-parser");
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended:true }));
+
+
+const cors = require('cors');
+app.use(cors());
+
+let auth = require("./auth")(app);
+
 
 
 
 // middleware 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended:true }));
-app.use (morgan("common"));
+
 app.use(express.static("public"));
+app.use (morgan("common"));
 
 
 
-const allowedOrigins = ['http://localhost:8080', 'https://intense-ridge-76926.herokuapp.com/', 'http://localhost:1234', 'https://sharp-carson-2b84b5.netlify.app' ];
-app.use(cors({
-    origin: (origin, callback) => {
-        if(!origin) return callback(null, true);
-        if(allowedOrigins.indexOf(origin) === -1){
-            //if specified origin isn't found on the list of allowed origins
-            let message = `The CORS policy for this application doesn't allow access from origin ${origin}`;
-            return callback(new Error(message), false); 
-        }
-        return callback(null, true);
-    }
-}));
 
 
-let auth = require("./auth")(app);
 
 
 const passport = require("passport");
