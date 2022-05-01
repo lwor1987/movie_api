@@ -35,7 +35,7 @@ app.use(express.static("public"));
 
 
 
-const allowedOrigins = ['http://localhost:8080', 'https://symphonious-tarsier-a0ff12.netlify.app' ];
+const allowedOrigins = ['http://localhost:8080', 'https://symphonious-tarsier-a0ff12.netlify.app/' ];
 app.use(cors({
     origin: (origin, callback) => {
         if(!origin) return callback(null, true);
