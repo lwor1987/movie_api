@@ -35,7 +35,7 @@ app.use(express.static("public"));
 
 
 
-const allowedOrigins = ['http://localhost:8080', 'https://intense-ridge-76926.herokuapp.com/', 'http://localhost:1234', 'https://starlit-salmiakki-3b0dab.netlify.app' ];
+const allowedOrigins = ['http://localhost:8080', 'https://intense-ridge-76926.herokuapp.com/', 'http://localhost:1234', 'https://marvelfave10.netlify.app/' ];
 app.use(cors({
     origin: (origin, callback) => {
         if(!origin) return callback(null, true);
